@@ -12,6 +12,7 @@ async function main() {
     where: { email: 'admin@biblioteca.com' },
     update: {},
     create: {
+      id: 1,
       nome: 'Administrador',
       email: 'admin@biblioteca.com',
       senha: senhaPadrao,
@@ -24,6 +25,7 @@ async function main() {
     where: { email: 'rod@biblioteca.com' },
     update: {},
     create: {
+      id: 2,
       nome: 'Rodrigo Barreto',
       email: 'rod@biblioteca.com',
       senha: senhaPadrao,
@@ -36,6 +38,7 @@ async function main() {
     where: { email: 'usuario@biblioteca.com' },
     update: {},
     create: {
+      id: 3,
       nome: 'Usuário Comum',
       email: 'usuario@biblioteca.com',
       senha: senhaPadrao,
@@ -47,6 +50,7 @@ async function main() {
     where: { email: 'joao@biblioteca.com' },
     update: {},
     create: {
+      id: 4,
       nome: 'João Silva',
       email: 'joao@biblioteca.com',
       senha: senhaPadrao,
