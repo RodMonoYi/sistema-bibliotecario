@@ -8,6 +8,10 @@
 
 API para gestão de usuários e catalogação de livros em uma biblioteca. Dockerizada pronta para ambiente de desenvolvimento.
 
+## 🌐 URL Pública da API
+
+- [API Biblioteca](https://sistema-bibliotecario-production-56a2.up.railway.app)
+
 ---
 
 ## ✅ Requisitos
