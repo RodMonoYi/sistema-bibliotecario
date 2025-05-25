@@ -3,7 +3,7 @@
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-green)
 ![Prisma](https://img.shields.io/badge/Prisma-ORM-blue)
 ![Docker](https://img.shields.io/badge/Docker-ready-blue)
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![Status](https://img.shields.io/badge/status-Finalizado-green)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 API para gestão de usuários e catalogação de livros em uma biblioteca. Dockerizada pronta para ambiente de desenvolvimento.
@@ -23,11 +23,11 @@ API para gestão de usuários e catalogação de livros em uma biblioteca. Docke
 ### 1. Clone o repositório
 
 ```bash
-git clone https://seurepositorio.com/biblioteca-api.git
-cd biblioteca-api
+git clone git@github.com:RodMonoYi/sistema-bibliotecario.git
+cd sistema-bibliotecario
 ```
 
-### 2. Crie o `.env`
+### 2. Crie o `.env` (use de exemplo o .env.example)
 
 ```env
 DATABASE_URL="postgresql://usuario:senha@postgres:5432/biblioteca?schema=public"
