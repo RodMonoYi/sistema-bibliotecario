@@ -17,6 +17,26 @@ export const listarTodos = async (_: Request, res: Response) => {
   res.json(livros)
 }
 
+// Listar livro por ID
+export const buscarPorId = async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+
+  const livro = await prisma.livro.findUnique({
+    where: { id },
+    include: {
+      usuario: {
+        select: { id: true, nome: true, email: true },
+      },
+    },
+  })
+
+  if (!livro) {
+    return res.status(404).json({ erro: 'Livro não encontrado' })
+  }
+
+  res.json(livro)
+}
+
 // Listar livros do usuário autenticado
 export const listarMeus = async (req: Request, res: Response) => {
   const livros = await prisma.livro.findMany({

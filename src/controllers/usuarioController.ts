@@ -27,6 +27,7 @@ export const registrar = async (req: Request, res: Response) => {
   }
 }
 
+
 // Login do usuário
 export const login = async (req: Request, res: Response) => {
   try {
@@ -50,4 +51,73 @@ export const login = async (req: Request, res: Response) => {
   } catch (erro) {
     res.status(400).json({ erro: erro instanceof Error ? erro.message : erro })
   }
+
+  
+}
+
+//Deletar usuário somente admin pode deletar usuário
+export const remover = async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+
+  await prisma.usuario.delete({ where: { id } })
+
+  res.status(204).send()
+}
+
+//Atualizar usuário somente admin ou o proprio usuario pode atualizar usuário
+export const atualizar = async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const { nome, email } = req.body
+
+  const atualizado = await prisma.usuario.update({
+    where: { id },
+    data: { nome, email },
+  })
+
+  res.json(atualizado)
+}
+
+// Listar todos os usuários somente admin pode listar todos os usuários
+export const listarTodos = async (_: Request, res: Response) => {
+  const usuarios = await prisma.usuario.findMany({
+    select: {
+      id: true,
+      nome: true,
+      email: true,
+      tipo: true,
+      createdAt: true,
+    },
+  })
+
+  res.json(usuarios)
+}
+
+// Buscar usuário por ID com seus livros publicados
+export const buscarPorId = async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+
+  const usuario = await prisma.usuario.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      nome: true,
+      email: true,
+      createdAt: true,
+      livros: {
+        select: {
+          id: true,
+          titulo: true,
+          autor: true,
+          descricao: true,
+          createdAt: true,
+        },
+      },
+    },
+  })
+
+  if (!usuario) {
+    return res.status(404).json({ erro: 'Usuário não encontrado' })
+  }
+
+  res.json(usuario)
 }

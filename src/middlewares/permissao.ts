@@ -25,3 +25,23 @@ export const verificarPermissao = async (
 
   next()
 }
+
+// Somente administradores podem seguir
+export const verificarPermissaoAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if (req.usuario.tipo !== 'ADMINISTRADOR') {
+    return res.status(403).json({ erro: 'Acesso negado: apenas administradores' })
+  }
+  next()
+}
+
+// Somente administradores ou o próprio usuário podem acessar
+export const verificarPermissaoOuAdmin = (req: Request, res: Response, next: NextFunction) => {
+  const idAlvo = Number(req.params.id)
+
+  if (req.usuario.id !== idAlvo && req.usuario.tipo !== 'ADMINISTRADOR') {
+    return res.status(403).json({ erro: 'Acesso negado: sem permissão para este recurso' })
+  }
+
+  next()
+}
+
