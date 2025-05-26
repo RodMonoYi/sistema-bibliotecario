@@ -14,9 +14,22 @@ const prisma = new PrismaClient()
 const porta = process.env.PORT || 3333
 
 // Middlewares globais
-app.use(cors())
+const corsOptions = {
+  // origin: [
+  //   'http://localhost:5174', // Adicione a origem do seu frontend local
+  //   'https://sistema-bibliotecario-frontend.vercel.app', // Se você tiver um deploy do frontend (exemplo)
+  //   'http://127.0.0.1:5174' // Às vezes, localhost pode ser resolvido para 127.0.0.1
+  // ],
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos HTTP que sua API suporta
+  credentials: true, // Permite o envio de cookies e headers de autorização
+  optionsSuccessStatus: 204 // Para requisições preflight (OPTIONS)
+}
+
+app.use(cors(corsOptions)) // Use o cors com as opções configuradas
 app.use(express.json())
 app.use(morgan('dev'))
+
 
 // Rotas da aplicação
 app.use('/api', rotas)

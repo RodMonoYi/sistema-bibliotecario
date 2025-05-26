@@ -1,4 +1,5 @@
 node_modules
+biblioteca-frontend
 dist
 .git
 .gitignore
