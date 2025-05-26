@@ -1,3 +1,4 @@
+//usuarioController.ts
 import { Request, Response } from 'express'
 import { PrismaClient, TipoUsuario } from '@prisma/client'
 import bcrypt from 'bcryptjs'

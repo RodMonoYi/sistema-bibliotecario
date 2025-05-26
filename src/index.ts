@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import { CorsOptions } from 'cors'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
 import { PrismaClient } from '@prisma/client'
@@ -13,26 +14,31 @@ const app = express()
 const prisma = new PrismaClient()
 const porta = process.env.PORT || 3333
 
-// Middlewares globais
-const corsOptions = {
-  // origin: [
-  //   'http://localhost:5174', // Adicione a origem do seu frontend local
-  //   'https://sistema-bibliotecario-frontend.vercel.app', // Se você tiver um deploy do frontend (exemplo)
-  //   'http://127.0.0.1:5174' // Às vezes, localhost pode ser resolvido para 127.0.0.1
-  // ],
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos HTTP que sua API suporta
-  credentials: true, // Permite o envio de cookies e headers de autorização
-  optionsSuccessStatus: 204 // Para requisições preflight (OPTIONS)
-}
+const corsOptions: CorsOptions = {
+  origin: (origin: string | undefined, callback) => {
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
+      'https://sistema-bibliotecario-frontend.vercel.app'
+    ];
 
-app.use(cors(corsOptions)) // Use o cors com as opções configuradas
-app.use(express.json())
-app.use(morgan('dev'))
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204
+};
 
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Adicionado para pré-flight funcionar
+app.use(express.json());
+app.use(morgan('dev'));
 
-// Rotas da aplicação
-app.use('/api', rotas)
+app.use('/api', rotas); // rotas vêm depois dos middlewares
 
 // Rota da documentação Swagger
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))

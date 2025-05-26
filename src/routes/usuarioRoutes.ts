@@ -1,3 +1,4 @@
+//usuarioRoutes.ts
 import { Router } from 'express'
 import * as usuarioController from '../controllers/usuarioController'
 import { verificarPermissaoAdmin } from '../middlewares/permissao'
