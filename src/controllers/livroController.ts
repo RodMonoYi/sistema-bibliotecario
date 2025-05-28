@@ -20,23 +20,36 @@ export const listarTodos = async (_: Request, res: Response) => {
 
 // Listar livro por ID
 export const buscarPorId = async (req: Request, res: Response) => {
-  const id = Number(req.params.id)
+  const id = Number(req.params.id);
 
-  const livro = await prisma.livro.findUnique({
-    where: { id },
-    include: {
-      usuario: {
-        select: { id: true, nome: true, email: true },
-      },
-    },
-  })
-
-  if (!livro) {
-    return res.status(404).json({ erro: 'Livro não encontrado' })
+  if (isNaN(id)) {
+    return res.status(400).json({ erro: 'ID inválido na URL.' });
   }
 
-  res.json(livro)
-}
+  try {
+    const livro = await prisma.livro.findUnique({
+      where: { id },
+      include: {
+        usuario: {
+          select: {
+            id: true,
+            nome: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    if (!livro) {
+      return res.status(404).json({ erro: 'Livro não encontrado' });
+    }
+
+    res.json(livro);
+  } catch (erro) {
+    console.error('[ERRO] buscarPorId:', erro);
+    res.status(500).json({ erro: 'Erro ao buscar livro por ID.' });
+  }
+};
 
 // Listar livros do usuário autenticado
 export const listarMeus = async (req: Request, res: Response) => {

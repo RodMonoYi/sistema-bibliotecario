@@ -16,13 +16,13 @@ const porta = process.env.PORT || 3333
 
 const corsOptions: CorsOptions = {
   origin: (origin: string | undefined, callback) => {
-    const allowedOrigins = [
-      'http://localhost:5173',
-      'http://127.0.0.1:5173',
-      'https://sistema-bibliotecario-frontend.vercel.app'
-    ];
+    // Se a origem permitida for '*', permite qualquer origem.
+    // Caso contrário, verifica se a origem da requisição está na lista de origens permitidas.
+    const allowedOrigins = process.env.CORS_ORIGIN || '*'; // Pega do .env ou usa '*'
 
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (allowedOrigins === '*') {
+      callback(null, true);
+    } else if (origin && allowedOrigins.split(',').includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));

@@ -19,28 +19,6 @@ const router = Router()
  */
 router.get('/', livroController.listarTodos)
 
-/**
- * @openapi
- * /livros/{id}:
- *   get:
- *     summary: Retorna as informações de um livro específico
- *     tags:
- *       - Livros
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         description: ID do livro
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Detalhes do livro retornados com sucesso
- *       404:
- *         description: Livro não encontrado
- */
-router.get('/:id', livroController.buscarPorId)
-
 
 /**
  * @openapi
@@ -79,6 +57,27 @@ router.get('/meus', autenticar, livroController.listarMeus)
  */
 router.get('/usuario/:id', livroController.listarPorUsuarioId)
 
+/**
+ * @openapi
+ * /livros/{id}:
+ *   get:
+ *     summary: Retorna as informações de um livro específico
+ *     tags:
+ *       - Livros
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID do livro
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Detalhes do livro retornados com sucesso
+ *       404:
+ *         description: Livro não encontrado
+ */
+router.get('/:id', livroController.buscarPorId)
 
 /**
  * @openapi
