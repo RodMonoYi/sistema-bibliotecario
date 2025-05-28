@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   postgres:
     image: postgres:15
@@ -12,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data 
 
   api:
     build:
@@ -36,5 +34,15 @@ services:
              npx prisma db seed &&
              npm run dev"
 
+  frontend:
+    build:
+      context: ./biblioteca-frontend
+      dockerfile: Dockerfile.frontend
+    container_name: biblioteca_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
 volumes:
-  postgres_data:
+  postgres_data: 
