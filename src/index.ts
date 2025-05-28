@@ -17,11 +17,7 @@ const porta = process.env.PORT || 3333
 
 const corsOptions: CorsOptions = {
   origin: (origin: string | undefined, callback) => {
-    const allowedOrigins = [
-      'http://localhost:5173',
-      'http://127.0.0.1:5173',
-      'https://sistema-bibliotecario-frontend.vercel.app'
-    ];
+    const allowedOrigins = '*';
 
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
