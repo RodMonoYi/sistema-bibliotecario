@@ -17,9 +17,9 @@ const porta = process.env.PORT || 3333
 const corsOptions: CorsOptions = {
   origin: (origin: string | undefined, callback) => {
 
-    const allowedOrigins = process.env.CORS_ORIGIN || 'http://localhost'; // Ajuste aqui para o domínio do seu frontend local
+    const allowedOrigins = '*'
 
-    if (allowedOrigins === '*' || (origin && allowedOrigins.split(',').includes(origin))) {
+    if (allowedOrigins === '*'){
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
